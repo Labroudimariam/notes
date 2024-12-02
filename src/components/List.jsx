@@ -57,6 +57,7 @@ const List = () => {
         <thead>
           <tr>
             <th>Title</th>
+            <th>Content</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -64,6 +65,7 @@ const List = () => {
           {list.map((note) => (
             <tr key={note.id}>
               <td>{note.title}</td>
+              <td>{note.content}</td>
               <td>
                 <Link to={`/edit-note/${note.id}`}>
                   <button>Edit</button>

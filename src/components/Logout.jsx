@@ -1,41 +1,17 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useAuth } from "../App";
 
 const Logout = () => {
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   useEffect(() => {
-    const logoutUser = async () => {
-      try {
-        const token = localStorage.getItem("token");
+    logout();
+    navigate("/login");
+  }, [logout, navigate]);
 
-        await axios.post(
-          "https://notes.devlop.tech/api/logout",
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        localStorage.removeItem("token");
-
-        navigate("/login");
-      } catch (error) {
-        console.error("Logout failed:", error);
-      }
-    };
-
-    logoutUser();
-  }, [navigate]);
-
-  return (
-    <div>
-      <h2>Logging out...</h2>
-    </div>
-  );
+  return <p>Logging out...</p>;
 };
 
 export default Logout;
