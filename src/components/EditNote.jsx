@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import axios from "../axiosConfig";
 
 const EditNote = () => {
   const { id } = useParams();
@@ -14,18 +14,18 @@ const EditNote = () => {
     const fetchNote = async () => {
       try {
         const token = localStorage.getItem("token");
-        const resp = await axios.get(
-          `https://notes.devlop.tech/api/notes/${id}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        setTitle(resp.data.title);
-        setContent(resp.data.content);
-        setOriginalTitle(resp.data.title);
-        setOriginalContent(resp.data.content);
+        const resp = await axios.get(`/notes/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        console.log(resp);
+        
+        setTitle(resp.title);
+        setContent(resp.content);
+        setOriginalTitle(resp.title);
+        setOriginalContent(resp.content);
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching note:", error);
       }
     };
     fetchNote();
@@ -36,20 +36,22 @@ const EditNote = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `https://notes.devlop.tech/api/notes/${id}`,
+        `/notes/${id}`,
         { title, content },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      navigate("/");
+      alert("Note updated successfully!");
+      navigate("/"); 
     } catch (error) {
-      console.error(error);
+      console.error("Error updating note:", error);
+      alert("There was an error updating the note.");
     }
   };
 
   const cancelEdit = () => {
     setTitle(originalTitle);
     setContent(originalContent);
-    navigate("/");
+    navigate("/"); 
   };
 
   return (

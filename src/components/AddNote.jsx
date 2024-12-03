@@ -1,24 +1,31 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axios from "../axiosConfig";
 
 const AddNote = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const navigate = useNavigate();
 
+  
+
+
   const addNote = async (e) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
+
       await axios.post(
-        "https://notes.devlop.tech/api/notes",
-        { title, content },
+        "/notes", 
+        { title, content},
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      navigate("/");
+
+      alert("Note added successfully!");
+      navigate("/"); 
     } catch (error) {
-      console.error(error);
+      console.error("Error adding note:", error);
+      alert("There was an error adding the note. Please try again.");
     }
   };
 
@@ -33,7 +40,10 @@ const AddNote = () => {
       />
       <br />
       <label>Content:</label>
-      <textarea value={content} onChange={(e) => setContent(e.target.value)} />
+      <textarea
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+      />
       <br />
       <button type="submit">Add Note</button>
     </form>

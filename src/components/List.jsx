@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axios from "../axiosConfig";
+import Logout from "./Logout";
 
 const List = () => {
   const [list, setList] = useState([]);
@@ -11,49 +12,38 @@ const List = () => {
 
   const getNotes = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const resp = await axios.get("https://notes.devlop.tech/api/notes", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setList(resp.data);
+      const response = await axios.get('/notes');
+      setList(response);
     } catch (error) {
       console.error("Error fetching notes:", error);
+      setList([]);
     }
   };
+
 
   const deleteNote = async (id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this note?"
-    );
-    if (!confirmDelete) return;
-
-    try {
-      const token = localStorage.getItem("token");
-      await axios.delete(`https://notes.devlop.tech/api/notes/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setList(list.filter((note) => note.id !== id));
-    } catch (error) {
-      console.error("Error deleting note:", error);
+    if (window.confirm("Are you sure you want to delete this note?")) {
+      try {
+        await axios.delete(`/notes/${id}`);
+        setList(list.filter((note) => note.id !== id));
+        alert("Note deleted successfully!");
+      } catch (error) {
+        console.error("Error deleting note:", error);
+      }
     }
-  };
-
-  const handleLogout = () => {
-    window.location.href = "/logout";
   };
 
   return (
     <>
       <h1>Notes List</h1>
-      <button onClick={handleLogout}>Logout</button>
       <Link to="/add-note">
         <button>Add New Note</button>
       </Link>
-      <table border="1">
+      <Logout />
+      <Link to="/update-password">
+        <button>update password</button>
+      </Link>
+      <table border="1" style={{ marginTop: "20px" }}>
         <thead>
           <tr>
             <th>Title</th>
@@ -62,18 +52,24 @@ const List = () => {
           </tr>
         </thead>
         <tbody>
-          {list.map((note) => (
-            <tr key={note.id}>
-              <td>{note.title}</td>
-              <td>{note.content}</td>
-              <td>
-                <Link to={`/edit-note/${note.id}`}>
-                  <button>Edit</button>
-                </Link>
-                <button onClick={() => deleteNote(note.id)}>Delete</button>
-              </td>
+          {list && list.length > 0 ? (
+            list.map((note) => (
+              <tr key={note.id}>
+                <td>{note.title}</td>
+                <td>{note.content}</td>
+                <td>
+                  <Link to={`/edit-note/${note.id}`}>
+                    <button>Edit</button>
+                  </Link>
+                  <button onClick={() => deleteNote(note.id)}>Delete</button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="3">No notes available.</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </>
