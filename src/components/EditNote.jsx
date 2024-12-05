@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "../axiosConfig";
+import "./editNote.css";
 
 const EditNote = () => {
   const { id } = useParams();
@@ -19,7 +20,7 @@ const EditNote = () => {
         });
 
         console.log(resp);
-        
+
         setTitle(resp.title);
         setContent(resp.content);
         setOriginalTitle(resp.title);
@@ -40,38 +41,41 @@ const EditNote = () => {
         { title, content },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      alert("Note updated successfully!");
-      navigate("/"); 
+      navigate("/");
     } catch (error) {
       console.error("Error updating note:", error);
-      alert("There was an error updating the note.");
     }
   };
 
   const cancelEdit = () => {
     setTitle(originalTitle);
     setContent(originalContent);
-    navigate("/"); 
+    navigate("/");
   };
 
   return (
-    <form onSubmit={updateNote}>
-      <h2>Edit Note</h2>
-      <label>Title:</label>
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <br />
-      <label>Content:</label>
-      <textarea value={content} onChange={(e) => setContent(e.target.value)} />
-      <br />
-      <button type="submit">Update Note</button>
-      <button type="button" onClick={cancelEdit}>
-        Cancel
-      </button>
-    </form>
+    <div className="editNote-container">
+      <h2 className="editNote-title">Edit Note</h2>
+      <form onSubmit={updateNote}>
+        <label>Title:</label>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Enter note title"
+        />
+        <label>Content:</label>
+        <textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          placeholder="Enter note content"
+        />
+        <button type="submit">Save</button>
+        <button type="button" onClick={cancelEdit}>
+          Cancel
+        </button>
+      </form>
+    </div>
   );
 };
 

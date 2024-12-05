@@ -1,0 +1,70 @@
+.addNote-container {
+  width: 500px;
+  background-color: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  border-radius: 12px;
+  padding: 30px 40px;
+  text-align: center;
+}
+
+.addNote-title {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+input,
+textarea {
+  width: 100%;
+  height: 40px;
+  background-color: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  outline: none;
+  border-radius: 40px;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+}
+
+textarea {
+  height: 100px;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #fff;
+}
+
+.add-btn {
+  width: 100%;
+  height: 45px;
+  background-color: #fff;
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
+
+@media only screen and (max-width: 600px) {
+  .addNote-container {
+    width: 300px;
+  }
+  input,
+  textarea {
+    font-size: 14px;
+  }
+}

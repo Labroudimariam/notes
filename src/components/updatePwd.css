@@ -1,0 +1,78 @@
+.updatePwd-container {
+  width: 500px;
+  background-color: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  border-radius: 12px;
+  padding: 30px 40px;
+}
+
+.updatePwd-title {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  width: 100%;
+  height: 50px;
+  margin: 20px 0;
+  position: relative;
+}
+
+.form-group input {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 40px;
+  font-size: 16px;
+  color: #fff;
+  padding: 20px 45px 20px 20px;
+}
+
+.form-group input::placeholder {
+  color: #fff;
+}
+
+.form-group .icon-login {
+  position: absolute;
+  right: 20px;
+  top: 30%;
+  transform: translate(-50%);
+  font-size: 20px;
+}
+
+.btn-update {
+  width: 100%;
+  height: 45px;
+  background-color: #fff;
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.btn-update:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  transition: 0.3s all;
+}
+
+@media only screen and (max-width: 600px) {
+  .updatePwd-container {
+    width: 300px;
+  }
+  .form-group {
+    width: 200px;
+  }
+}
